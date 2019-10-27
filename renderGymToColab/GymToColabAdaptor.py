@@ -10,7 +10,7 @@ Install packages
 """
 
 # Commented out IPython magic to ensure Python compatibility.
-def install_packages_and_modules():
+def initialize_adaptor():
   #remove " > /dev/null 2>&1" to see what is going on under the hood
   !pip install gym pyvirtualdisplay > /dev/null 2>&1
   !apt-get install -y xvfb python-opengl ffmpeg > /dev/null 2>&1
@@ -39,8 +39,6 @@ def install_packages_and_modules():
   from IPython.display import HTML
   from IPython import display as ipythondisplay
   from pyvirtualdisplay import Display
-
-def start_display():
   display = Display(visible=0, size=(1400, 900))
   display.start()
 
@@ -67,30 +65,3 @@ def show_video():
 def wrap_env(env):
   env = Monitor(env, './video', force=True)
   return env
-
-env = wrap_env(gym.make("MountainCar-v0"))
-
-
-
-for episode in range(200):
-
-  observation = env.reset()
-
-  while True:
-    
-    env.render()
-    
-    #your agent goes here
-    action = env.action_space.sample() 
-         
-    observation, reward, done, info = env.step(action) 
-   
-        
-    if done: 
-      break;
-            
-env.close()
-show_video()
-
-install_packages_and_modules()
-start_display()
